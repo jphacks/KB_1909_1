@@ -1,8 +1,10 @@
 <template>
   <v-container>
     <p>何でも投稿してください！</p>
-    <v-textarea v-model="postBody"></v-textarea>
-    <v-btn right absolute outlined @click="createPost">投稿</v-btn>
+    <div class="form-container">
+      <v-textarea v-model="postBody" outlined auto-grow></v-textarea>
+      <v-btn outlined @click="createPost">投稿</v-btn>
+    </div>
   </v-container>
 </template>
 
@@ -33,3 +35,9 @@ class PostForm extends Vue {
 
 export default PostForm
 </script>
+
+<style lang="scss" scoped>
+.form-container {
+  text-align: right;
+}
+</style>

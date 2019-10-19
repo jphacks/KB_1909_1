@@ -11,7 +11,6 @@
 import { Component, Vue } from 'vue-property-decorator'
 import ApiV1 from '../util/apiv1'
 import Post from '../models/Post'
-import { GetPostsResponse } from '../util/apiv1/posts/getPosts'
 
 @Component({})
 class PostListContainer extends Vue {
@@ -28,9 +27,9 @@ class PostListContainer extends Vue {
         // TODO: 実際の値を入れる
         longitude: 34.68486,
         latitude: 135.1994354
-      })) as GetPostsResponse
+      })) as Post[]
 
-      this.posts = res.posts
+      this.posts = res
       this.loaded = true
     } catch (err) {
       console.log(err)
