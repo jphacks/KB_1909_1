@@ -84,7 +84,9 @@ const nuxtConfig: Configuration = {
     extend(config, ctx) {}
   },
   env: {
-    BASE_URL: 'https://monu-geometry.herokuapp.com'
+    BASE_URL: 'https://monu-geometry.herokuapp.com',
+    IMGUR_CLIENT_ID: 'a42de551eacac34',
+    IMGUR_CLIENT_SECRET: '64fed3e58718d7734fc33caea3fd4c5687b6f1ec'
   }
 }
 
