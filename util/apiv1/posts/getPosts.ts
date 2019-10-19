@@ -16,6 +16,7 @@ const getPosts = async (params: GetPostsRequest): Promise<Post[] | void> => {
 interface GetPostsRequest {
   longitude: number
   latitude: number
+  delta: number
 }
 
 export default getPosts

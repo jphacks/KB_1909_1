@@ -25,6 +25,10 @@ class PostForm extends Vue {
   onSubmit(): string {
     return this.postBody
   }
+
+  resetPostBody() {
+    this.postBody = ''
+  }
 }
 
 export default PostForm

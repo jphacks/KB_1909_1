@@ -5,10 +5,15 @@
     </v-app-bar>
     <v-container>
       <div v-if="loadLocation">
-        <post-form :position="position" @on-submit="onSubmitPost"></post-form>
+        <post-form
+          ref="post-form"
+          :position="position"
+          @on-submit="onSubmitPost"
+        ></post-form>
         <post-list-container
           ref="post-list"
           :position="position"
+          :posts="posts"
         ></post-list-container>
       </div>
       <div v-else>
@@ -22,6 +27,7 @@
 import { Component, Vue } from 'vue-property-decorator'
 import Coords from '../models/Coords'
 import ApiV1 from '../util/apiv1'
+import Post from '../models/Post'
 import PostForm from '@/components/PostForm'
 import PostListContainer from '@/components/PostListContainer'
 
@@ -35,12 +41,15 @@ class Index extends Vue {
   loadLocation = false
   position: Coords | null = null
   status = '現在地を取得しています'
+  posts: Post[] = []
 
   mounted() {
     navigator.geolocation.watchPosition(
       this.getLocationSuccessfully,
       this.getLocationError
     )
+    this.fetchPosts()
+    setInterval(this.fetchPosts, 1000 * 10)
   }
 
   getLocationSuccessfully(position) {
@@ -58,6 +67,8 @@ class Index extends Vue {
 
   async onSubmitPost(postBody) {
     try {
+      this.$refs['post-form'].resetPostBody()
+
       const res = await ApiV1.posts.createPost({
         longitude: this.position.longitude,
         latitude: this.position.latitude,
@@ -66,7 +77,22 @@ class Index extends Vue {
       })
 
       console.log(res)
-      this.$refs['post-list'].fetchPosts()
+      this.fetchPosts()
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  async fetchPosts() {
+    try {
+      const res = (await ApiV1.posts.getPosts({
+        longitude: this.position.longitude,
+        latitude: this.position.latitude,
+        delta: 0.001
+      })) as Post[]
+
+      this.posts = res
+      console.log(res)
     } catch (err) {
       console.log(err)
     }
