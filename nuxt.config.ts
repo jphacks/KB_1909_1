@@ -83,6 +83,9 @@ const nuxtConfig: Configuration = {
      ** You can extend webpack config here
      */
     extend(config, ctx) {}
+  },
+  env: {
+    BASE_URL: 'monu-geometry.herokuapp.com'
   }
 }
 
