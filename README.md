@@ -1,6 +1,6 @@
-# monu_front
+# Racoon
 
-> jphacks miyakohack
+> website of Racoon
 
 ## Build Setup
 

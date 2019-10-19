@@ -1,9 +1,14 @@
 <template>
-  <div>
+  <v-app dark>
     <nuxt></nuxt>
-  </div>
+  </v-app>
 </template>
 
-<script>
-export default {}
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator'
+
+@Component({})
+class Default extends Vue {}
+
+export default Default
 </script>

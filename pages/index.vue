@@ -1,11 +1,14 @@
 <template>
   <div>
-    <v-app-bar>
-      monu
-    </v-app-bar>
+    <v-app-bar>monu</v-app-bar>
   </div>
 </template>
 
 <script>
-export default {}
+import { Component, Vue } from 'vue-property-decorator'
+
+@Component({})
+class Index extends Vue {}
+
+export default Index
 </script>
