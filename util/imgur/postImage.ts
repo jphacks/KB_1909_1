@@ -1,6 +1,6 @@
 import { imgurInstance } from './common'
 
-const uploadImage = async (base64Url: string) => {
+const uploadImage = async (base64Url: string): Promise<ImgurResponse | void> => {
   const res = await imgurInstance.post('/upload', {
     image: base64Url
   })
@@ -11,6 +11,12 @@ const uploadImage = async (base64Url: string) => {
     return res.data
   } else {
     console.log(res.data)
+  }
+}
+
+export interface ImgurResponse {
+  data: {
+    link: string
   }
 }
 

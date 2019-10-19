@@ -6,7 +6,9 @@
     <p>(現在地: {{ `${position.latitude}  ${position.longitude}` }})</p>
     <div class="form-container">
       <v-textarea v-model="postBody" outlined auto-grow></v-textarea>
-      <v-btn outlined @click="onSubmit">投稿</v-btn>
+      <v-btn class="mx-2" fab dark small color="primary">
+        <v-icon dark>mdi-minus</v-icon> </v-btn
+      ><v-btn outlined @click="onSubmit">投稿</v-btn>
     </div>
   </div>
 </template>
@@ -20,10 +22,11 @@ class PostForm extends Vue {
   @Prop() readonly position?: Coords
 
   postBody = ''
+  imageUrl = ''
 
   @Emit()
-  onSubmit(): string {
-    return this.postBody
+  onSubmit() {
+    return { postBody: this.postBody, imageUrl: this.imageUrl }
   }
 
   resetPostBody() {

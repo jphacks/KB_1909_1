@@ -28,6 +28,7 @@ import { Component, Vue } from 'vue-property-decorator'
 import Coords from '../models/Coords'
 import ApiV1 from '../util/apiv1'
 import Post from '../models/Post'
+import uploadImage, { ImgurResponse } from '../util/imgur/postImage'
 import PostForm from '@/components/PostForm'
 import PostListContainer from '@/components/PostListContainer'
 
@@ -39,7 +40,7 @@ import PostListContainer from '@/components/PostListContainer'
 })
 class Index extends Vue {
   loadLocation = false
-  position: Coords | null = null
+  position: Coords = { latitude: 0, longitude: 0 }
   status = '現在地を取得しています'
   posts: Post[] = []
 
@@ -53,6 +54,7 @@ class Index extends Vue {
   }
 
   getLocationSuccessfully(position) {
+    if (!position) return
     this.position = {
       latitude: position.coords.latitude,
       longitude: position.coords.longitude
@@ -65,14 +67,23 @@ class Index extends Vue {
     this.status = '位置情報を取得できませんでした'
   }
 
-  async onSubmitPost(postBody) {
+  async onSubmitPost(payload) {
+    const postBody = payload.postBody
+    const imageUrl = payload.imageUrl
+
     try {
       this.$refs['post-form'].resetPostBody()
+
+      let imgurUrl = ''
+
+      if (imageUrl) {
+        imgurUrl = ((await uploadImage(imageUrl)) as ImgurResponse).data.link
+      }
 
       const res = await ApiV1.posts.createPost({
         longitude: this.position.longitude,
         latitude: this.position.latitude,
-        url: '',
+        url: imgurUrl,
         body: postBody
       })
 
