@@ -2,7 +2,13 @@
   "compilerOptions": {
     "baseUrl": ".",
     "experimentalDecorators": true,
-    "types": ["@types/node", "@nuxt/types", "@nuxtjs/axios", "vue-router"],
+    "types": [
+      "@types/node",
+      "@nuxt/types",
+      "@nuxtjs/axios",
+      "vue-router",
+      "vuetify"
+    ],
     "paths": { "@/*": ["./*"], "~/*": ["./*"] },
     "target": "es5",
     "strict": true,
