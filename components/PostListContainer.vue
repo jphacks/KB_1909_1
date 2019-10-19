@@ -8,12 +8,15 @@
   </div>
 </template>
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue } from 'vue-property-decorator'
 import ApiV1 from '../util/apiv1'
 import Post from '../models/Post'
+import Coords from '../models/Coords'
 
 @Component({})
 class PostListContainer extends Vue {
+  @Prop() readonly position?: Coords
+
   posts?: Post[]
   loaded = false
 
@@ -24,9 +27,8 @@ class PostListContainer extends Vue {
   async fetchPosts() {
     try {
       const res = (await ApiV1.posts.getPosts({
-        // TODO: 実際の値を入れる
-        longitude: 34.68486,
-        latitude: 135.1994354
+        longitude: this.position.longitude,
+        latitude: this.position.latitude
       })) as Post[]
 
       this.posts = res

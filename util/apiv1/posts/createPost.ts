@@ -5,10 +5,9 @@ const createPosts = async (
 ): Promise<CreatePostsResponse | void> => {
   const res = await instance.post('/posts', body)
 
-  if (res.status === 200) {
+  if (res.status === 201) {
     return res.data as CreatePostsResponse
   } else {
-    // TODO: エラーハンドリング
     console.log(res.data)
   }
 }
