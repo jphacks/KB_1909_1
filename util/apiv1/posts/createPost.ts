@@ -5,7 +5,7 @@ const createPosts = async (
 ): Promise<CreatePostsResponse | void> => {
   const res = await instance.post('/posts', body)
 
-  if (res.status == 200) {
+  if (res.status === 200) {
     return res.data as CreatePostsResponse
   } else {
     // TODO: エラーハンドリング
@@ -20,7 +20,7 @@ interface CreatePostsRequest {
   body: string
 }
 
-interface CreatePostsResponse {
+export interface CreatePostsResponse {
   body: string
   url: string
   // eslint-disable-next-line camelcase

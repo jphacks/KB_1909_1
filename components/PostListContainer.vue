@@ -13,7 +13,7 @@ import ApiV1 from '../util/apiv1'
 import Post from '../models/Post'
 import { GetPostsResponse } from '../util/apiv1/posts/getPosts'
 
-Component({})
+@Component({})
 class PostListContainer extends Vue {
   posts?: Post[]
   loaded = false
