@@ -6,9 +6,10 @@
     <p v-if="loadLocation">
       (現在地: {{ `${position.latitude}  ${position.longitude}` }})
     </p>
+    <p v-else>現在地を取得しています</p>
     <div class="form-container">
       <v-textarea v-model="postBody" outlined auto-grow></v-textarea>
-      <v-btn outlined @click="createPost">投稿</v-btn>
+      <v-btn outlined @click="createPost" :disabled="!loadLocation">投稿</v-btn>
     </div>
   </v-container>
 </template>
@@ -36,8 +37,8 @@ class PostForm extends Vue {
     try {
       const res = await ApiV1.posts.createPost({
         // TODO: 実際の値を入れる
-        longitude: 34.68486,
-        latitude: 135.1994354,
+        longitude: this.position.longitude,
+        latitude: this.position.latitude,
         url: '',
         body: this.postBody
       })
