@@ -21,7 +21,7 @@ import Coords from '../models/Coords'
 class PostListContainer extends Vue {
   @Prop() readonly position?: Coords
 
-  posts?: Post[]
+  posts: Post[] = []
   loaded = false
 
   mounted() {

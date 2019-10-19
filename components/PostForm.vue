@@ -6,15 +6,14 @@
     <p>(現在地: {{ `${position.latitude}  ${position.longitude}` }})</p>
     <div class="form-container">
       <v-textarea v-model="postBody" outlined auto-grow></v-textarea>
-      <v-btn outlined @click="createPost">投稿</v-btn>
+      <v-btn outlined @click="onSubmit">投稿</v-btn>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Emit, Prop, Vue } from 'vue-property-decorator'
 import Coords from '../models/Coords'
-import ApiV1 from '../util/apiv1'
 
 @Component({})
 class PostForm extends Vue {
@@ -22,19 +21,9 @@ class PostForm extends Vue {
 
   postBody = ''
 
-  async createPost() {
-    try {
-      const res = await ApiV1.posts.createPost({
-        longitude: this.position.longitude,
-        latitude: this.position.latitude,
-        url: '',
-        body: this.postBody
-      })
-
-      console.log(res)
-    } catch (err) {
-      console.log(err)
-    }
+  @Emit()
+  onSubmit(): string {
+    return this.postBody
   }
 }
 
