@@ -1,6 +1,6 @@
-# Racoon
+# RE:Site
 
-> website of Racoon
+frontend
 
 ## Build Setup
 
