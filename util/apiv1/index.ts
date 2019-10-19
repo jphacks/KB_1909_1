@@ -1,10 +1,10 @@
 import getPosts from './posts/getPosts'
-import createPosts from './posts/createPos'
+import createPost from './posts/createPost'
 
 const ApiV1 = {
   posts: {
     getPosts,
-    createPosts
+    createPost
   }
 }
 
