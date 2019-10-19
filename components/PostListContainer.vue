@@ -26,6 +26,7 @@ class PostListContainer extends Vue {
 
   mounted() {
     this.fetchPosts()
+    setInterval(this.fetchPosts, 1000 * 10)
   }
 
   async fetchPosts() {
