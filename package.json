@@ -14,8 +14,14 @@
     "@nuxt/typescript-runtime": "^0.1.6",
     "@nuxtjs/axios": "^5.3.6",
     "@nuxtjs/pwa": "^3.0.0-0",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-loader": "^3.0.2",
+    "eslint-plugin-import": "^2.18.2",
     "nuxt": "^2.0.0",
-    "vue-property-decorator": "^8.2.2"
+    "ts-node": "^8.4.1",
+    "typescript": "^3.6.4",
+    "vue-property-decorator": "^8.2.2",
+    "vuetify": "^2.1.5"
   },
   "devDependencies": {
     "@nuxt/typescript-build": "^0.2.8",
@@ -27,8 +33,16 @@
     "babel-eslint": "^10.0.1",
     "eslint": "^6.5.1",
     "eslint-config-prettier": "^6.4.0",
-    "eslint-plugin-nuxt": ">=0.4.2",
+    "eslint-plugin-node": "^10.0.0",
+    "eslint-plugin-nuxt": "^0.4.3",
     "eslint-plugin-prettier": "^3.1.1",
-    "prettier": "^1.18.2"
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "eslint-plugin-vue": "^5.2.3",
+    "node-sass": "^4.12.0",
+    "prettier": "^1.18.2",
+    "sass-loader": "^8.0.0",
+    "ts-loader": "^6.2.0",
+    "typesync": "^0.6.1"
   }
 }
