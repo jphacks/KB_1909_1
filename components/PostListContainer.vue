@@ -1,14 +1,18 @@
 <template>
   <div v-if="loaded">
-    <div v-for="(post, i) in posts" :key="i" class="post">
-      <p>{{ post.created_at }}</p>
-      <p>{{ post.body }}</p>
-      <p>{{ post.distance }}</p>
-    </div>
+    <h2>周辺のソート</h2>
+    <v-card v-for="(post, i) in posts" :key="i" class="post-card">
+      <v-card-text>
+        <p>現在地から{{ Math.round(post.distance) }}m</p>
+        <p class="text--primary">{{ post.body }}</p>
+        <p class="created-at">{{ formatDate(post.created_at) }}</p>
+      </v-card-text>
+    </v-card>
   </div>
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
+import * as dayjs from 'dayjs'
 import ApiV1 from '../util/apiv1'
 import Post from '../models/Post'
 import Coords from '../models/Coords'
@@ -33,11 +37,27 @@ class PostListContainer extends Vue {
 
       this.posts = res
       this.loaded = true
+      console.log(res)
     } catch (err) {
       console.log(err)
     }
+  }
+
+  formatDate(date: number): string {
+    return dayjs.unix(date).format('YYYY-MM-DD HH:MM')
   }
 }
 
 export default PostListContainer
 </script>
+
+<style lang="scss" scoped>
+.post-card {
+  margin: 10px 0;
+}
+
+.created-at {
+  text-align: right;
+  margin-bottom: 0;
+}
+</style>

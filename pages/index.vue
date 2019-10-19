@@ -3,13 +3,15 @@
     <v-app-bar>
       <h1>monu</h1>
     </v-app-bar>
-    <div v-if="loadLocation">
-      <post-form :position="position"></post-form>
-      <post-list-container :position="position"></post-list-container>
-    </div>
-    <div v-else>
-      <p>{{ status }}</p>
-    </div>
+    <v-container>
+      <div v-if="loadLocation">
+        <post-form :position="position"></post-form>
+        <post-list-container :position="position"></post-list-container>
+      </div>
+      <div v-else>
+        <p>{{ status }}</p>
+      </div>
+    </v-container>
   </div>
 </template>
 

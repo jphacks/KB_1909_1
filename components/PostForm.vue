@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <div>
     <p>
       何でも投稿してください！
     </p>
@@ -8,7 +8,7 @@
       <v-textarea v-model="postBody" outlined auto-grow></v-textarea>
       <v-btn outlined @click="createPost">投稿</v-btn>
     </div>
-  </v-container>
+  </div>
 </template>
 
 <script lang="ts">
@@ -25,7 +25,6 @@ class PostForm extends Vue {
   async createPost() {
     try {
       const res = await ApiV1.posts.createPost({
-        // TODO: 実際の値を入れる
         longitude: this.position.longitude,
         latitude: this.position.latitude,
         url: '',
