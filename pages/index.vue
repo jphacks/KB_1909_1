@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-app-bar>
-      <h1>monu</h1>
+      <h1>RE:Site</h1>
     </v-app-bar>
 
     <create-user-dialog
@@ -38,6 +38,7 @@ import uploadImage, { ImgurResponse } from '../util/imgur/postImage'
 import CreateUserDialog from '../components/CreateUserDialog.vue'
 import createUser, { CreateUserResponse } from '../util/apiV2/users/createUser'
 import getUser, { GetUserResponse } from '../util/apiV2/users/getUser'
+import LoginDialog from '../components/LoginDialog.vue'
 import PostForm from '@/components/PostForm'
 import PostListContainer from '@/components/PostListContainer'
 
@@ -45,7 +46,8 @@ import PostListContainer from '@/components/PostListContainer'
   components: {
     PostForm,
     PostListContainer,
-    CreateUserDialog
+    CreateUserDialog,
+    LoginDialog
   }
 })
 class Index extends Vue {

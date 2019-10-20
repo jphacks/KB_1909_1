@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>周辺のソート</h2>
+    <h2>周辺のmonu</h2>
     <v-card v-for="(post, i) in posts" :key="i" class="post-card">
       <v-card-text>
         <p>現在地から{{ Math.round(post.distance) }}m</p>
