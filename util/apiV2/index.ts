@@ -3,6 +3,7 @@ import createPost from './posts/createPost'
 import createUser from './users/createUser'
 import getUser from './users/getUser'
 import login from './users/login'
+import getUsersId from './users/getUsersId'
 
 const ApiV2 = {
   posts: {
@@ -12,7 +13,8 @@ const ApiV2 = {
   users: {
     createUser,
     getUser,
-    login
+    login,
+    getUsersId
   }
 }
 
