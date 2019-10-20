@@ -56,7 +56,7 @@
                       console.log(item['lat']);
                       var pin = { lat: item['lat'], lng: item['lng'] };
                       var user = response["data"]["name"];
-                      var marker = new google.maps.Marker({ position: pin, map: map });
+                      var marker = new google.maps.Marker({ position: pin, map: map , icon: im});
                       // The marker, positioned at pin
 
                       // let data=[
