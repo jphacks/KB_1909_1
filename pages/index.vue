@@ -37,17 +37,18 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import Cookies from 'js-cookie'
 import Coords from '../models/Coords'
-import ApiV1 from '../util/apiv1'
 import Post from '../models/Post'
 import uploadImage, { ImgurResponse } from '../util/imgur/postImage'
 import CreateUserDialog from '../components/CreateUserDialog.vue'
-import createUser, { CreateUserResponse } from '../util/apiV2/users/createUser'
 import getUser, { GetUserResponse } from '../util/apiV2/users/getUser'
 import LoginDialog from '../components/LoginDialog.vue'
-import { LoginResponse } from '../util/apiV2/users/login'
+import login, { LoginResponse } from '../util/apiV2/users/login'
+import ApiV2 from '../util/apiV2'
 import PostForm from '@/components/PostForm'
 import PostListContainer from '@/components/PostListContainer'
+import { CreateUserResponse } from '../util/apiV2/users/createUser'
 
 @Component({
   components: {
@@ -59,7 +60,7 @@ import PostListContainer from '@/components/PostListContainer'
 })
 class Index extends Vue {
   isOpenCreateUserDialog = false
-  isOpenLoginDialog = true
+  isOpenLoginDialog = false
   userToken = ''
   loadLocation = false
   position: Coords = { latitude: 0, longitude: 0 }
@@ -67,8 +68,16 @@ class Index extends Vue {
   posts: Post[] = []
   me?: GetUserResponse
 
+  mounted() {
+    this.userToken = Cookies.get('usertoken')
+    if (!this.userToken) {
+      this.isOpenLoginDialog = true
+    }
+  }
+
   async afterLogin() {
     if (!this.userToken) return
+    Cookies.set('usertoken', this.userToken)
     this.me = (await getUser(this.userToken)) as GetUserResponse
 
     navigator.geolocation.watchPosition(
@@ -106,12 +115,15 @@ class Index extends Vue {
         imgurUrl = ((await uploadImage(imageUrl)) as ImgurResponse).data.link
       }
 
-      const res = await ApiV1.posts.createPost({
-        longitude: this.position.longitude,
-        latitude: this.position.latitude,
-        url: imgurUrl,
-        body: postBody
-      })
+      const res = await ApiV2.posts.createPost(
+        {
+          longitude: this.position.longitude,
+          latitude: this.position.latitude,
+          url: imgurUrl,
+          body: postBody
+        },
+        this.userToken
+      )
 
       console.log(res)
       this.fetchPosts()
@@ -122,11 +134,14 @@ class Index extends Vue {
 
   async fetchPosts() {
     try {
-      const res = (await ApiV1.posts.getPosts({
-        longitude: this.position.longitude,
-        latitude: this.position.latitude,
-        delta: 0.001
-      })) as Post[]
+      const res = (await ApiV2.posts.getPosts(
+        {
+          longitude: this.position.longitude,
+          latitude: this.position.latitude,
+          delta: 0.001
+        },
+        this.userToken
+      )) as Post[]
 
       this.posts = res
       console.log(res)
@@ -136,14 +151,16 @@ class Index extends Vue {
   }
 
   async submitNewUser(newUser) {
-    const createdUser = (await createUser(newUser)) as CreateUserResponse
+    const createdUser = (await ApiV2.users.createUser(
+      newUser
+    )) as CreateUserResponse
     this.userToken = createdUser.token
     console.log(this.userToken)
     this.afterLogin()
   }
 
   async submitLogin(loginReq) {
-    const res = (await createUser(loginReq)) as LoginResponse
+    const res = (await login(loginReq)) as LoginResponse
     this.userToken = res.token
     this.afterLogin()
   }

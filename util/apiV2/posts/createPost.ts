@@ -1,9 +1,14 @@
 import { instance } from '../common'
 
 const createPosts = async (
-  body: CreatePostsRequest
+  body: CreatePostsRequest,
+  token: string
 ): Promise<CreatePostsResponse | void> => {
-  const res = await instance.post('/posts', body)
+  const res = await instance.post('/posts', body, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  })
 
   if (res.status === 201) {
     return res.data as CreatePostsResponse

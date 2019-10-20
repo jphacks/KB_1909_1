@@ -1,11 +1,9 @@
 import { instance } from '../common'
 
-const createUser = async (
-  body: LoginRequest
-): Promise<LoginResponse | void> => {
+const login = async (body: LoginRequest): Promise<LoginResponse | void> => {
   const res = await instance.post('/login', body)
 
-  if (res.status === 201) {
+  if (res.status === 200) {
     return res.data as LoginResponse
   } else {
     console.log(res.data)
@@ -25,5 +23,4 @@ export interface LoginResponse {
   image: string
 }
 
-export default createUser
-
+export default login
