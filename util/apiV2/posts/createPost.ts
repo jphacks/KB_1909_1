@@ -29,7 +29,7 @@ export interface CreatePostsResponse {
   body: string
   url: string
   // eslint-disable-next-line camelcase
-  created_at: number
+  created_at: string
 }
 
 export default createPosts
