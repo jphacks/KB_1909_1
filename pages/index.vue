@@ -64,7 +64,7 @@ class Index extends Vue {
   userToken = ''
   loadLocation = false
   position: Coords = { latitude: 0, longitude: 0 }
-  status = '現在地を取得しています'
+  status = ''
   posts: Post[] = []
   me?: GetUserResponse
 
@@ -73,6 +73,7 @@ class Index extends Vue {
     if (!this.userToken) {
       this.isOpenLoginDialog = true
     }
+    this.afterLogin()
   }
 
   async afterLogin() {
@@ -80,10 +81,13 @@ class Index extends Vue {
     Cookies.set('usertoken', this.userToken)
     this.me = (await getUser(this.userToken)) as GetUserResponse
 
+    this.status = '現在地を取得しています'
     navigator.geolocation.watchPosition(
       this.getLocationSuccessfully,
       this.getLocationError
     )
+
+    this.status = '周辺のmonuを探しています'
     this.fetchPosts()
     setInterval(this.fetchPosts, 1000 * 10)
   }
@@ -144,9 +148,9 @@ class Index extends Vue {
       )) as Post[]
 
       this.posts = res
-      console.log(res)
+      this.status = 'monuを取得しました'
     } catch (err) {
-      console.log(err)
+      this.status = err.message
     }
   }
 
