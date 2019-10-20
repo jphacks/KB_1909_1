@@ -46,9 +46,9 @@ import getUser, { GetUserResponse } from '../util/apiV2/users/getUser'
 import LoginDialog from '../components/LoginDialog.vue'
 import login, { LoginResponse } from '../util/apiV2/users/login'
 import ApiV2 from '../util/apiV2'
+import { CreateUserResponse } from '../util/apiV2/users/createUser'
 import PostForm from '@/components/PostForm'
 import PostListContainer from '@/components/PostListContainer'
-import { CreateUserResponse } from '../util/apiV2/users/createUser'
 
 @Component({
   components: {

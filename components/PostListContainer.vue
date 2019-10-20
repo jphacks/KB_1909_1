@@ -23,7 +23,7 @@ class PostListContainer extends Vue {
   @Prop() readonly posts?: Post[]
 
   formatDate(date: number): string {
-    return dayjs.unix(date).format('YYYY-MM-DD HH:MM')
+    return dayjs(date).format('YYYY-MM-DD HH:mm')
   }
 }
 

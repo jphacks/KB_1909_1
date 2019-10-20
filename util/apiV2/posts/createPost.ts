@@ -25,6 +25,7 @@ interface CreatePostsRequest {
 }
 
 export interface CreatePostsResponse {
+  id: number
   body: string
   url: string
   // eslint-disable-next-line camelcase
