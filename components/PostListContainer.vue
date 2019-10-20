@@ -5,7 +5,7 @@
       <v-card-text>
         <p>現在地から{{ Math.round(post.distance) }}m</p>
         <p class="display-1 text--primary">
-          {{ post. }}
+          {{ post.user_id }}
         </p>
         <v-img :src="post.url" max-height="200"></v-img>
         <p class="text--primary">{{ post.body }}</p>
