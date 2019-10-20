@@ -5,10 +5,15 @@
     </v-app-bar>
     <v-container>
       <div v-if="loadLocation">
-        <post-form :position="position" @on-submit="onSubmitPost"></post-form>
+        <post-form
+          ref="post-form"
+          :position="position"
+          @on-submit="onSubmitPost"
+        ></post-form>
         <post-list-container
           ref="post-list"
           :position="position"
+          :posts="posts"
         ></post-list-container>
       </div>
       <div v-else>
@@ -22,6 +27,8 @@
 import { Component, Vue } from 'vue-property-decorator'
 import Coords from '../models/Coords'
 import ApiV1 from '../util/apiv1'
+import Post from '../models/Post'
+import uploadImage, { ImgurResponse } from '../util/imgur/postImage'
 import PostForm from '@/components/PostForm'
 import PostListContainer from '@/components/PostListContainer'
 
@@ -33,17 +40,21 @@ import PostListContainer from '@/components/PostListContainer'
 })
 class Index extends Vue {
   loadLocation = false
-  position: Coords | null = null
+  position: Coords = { latitude: 0, longitude: 0 }
   status = '現在地を取得しています'
+  posts: Post[] = []
 
   mounted() {
     navigator.geolocation.watchPosition(
       this.getLocationSuccessfully,
       this.getLocationError
     )
+    this.fetchPosts()
+    setInterval(this.fetchPosts, 1000 * 10)
   }
 
   getLocationSuccessfully(position) {
+    if (!position) return
     this.position = {
       latitude: position.coords.latitude,
       longitude: position.coords.longitude
@@ -56,17 +67,43 @@ class Index extends Vue {
     this.status = '位置情報を取得できませんでした'
   }
 
-  async onSubmitPost(postBody) {
+  async onSubmitPost(payload) {
+    const postBody = payload.postBody
+    const imageUrl = payload.imageUrl
+
     try {
+      this.$refs['post-form'].resetPostBody()
+
+      let imgurUrl = ''
+
+      if (imageUrl) {
+        imgurUrl = ((await uploadImage(imageUrl)) as ImgurResponse).data.link
+      }
+
       const res = await ApiV1.posts.createPost({
         longitude: this.position.longitude,
         latitude: this.position.latitude,
-        url: '',
+        url: imgurUrl,
         body: postBody
       })
 
       console.log(res)
-      this.$refs['post-list'].fetchPosts()
+      this.fetchPosts()
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  async fetchPosts() {
+    try {
+      const res = (await ApiV1.posts.getPosts({
+        longitude: this.position.longitude,
+        latitude: this.position.latitude,
+        delta: 0.001
+      })) as Post[]
+
+      this.posts = res
+      console.log(res)
     } catch (err) {
       console.log(err)
     }

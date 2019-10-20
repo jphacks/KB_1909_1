@@ -6,7 +6,17 @@
     <p>(現在地: {{ `${position.latitude}  ${position.longitude}` }})</p>
     <div class="form-container">
       <v-textarea v-model="postBody" outlined auto-grow></v-textarea>
-      <v-btn outlined @click="onSubmit">投稿</v-btn>
+      <input
+        id="fileElem"
+        type="file"
+        accept="image/*"
+        @change="selectedFile"
+        hidden
+      />
+      <v-img v-if="imageUrl" :src="imageUrl" max-height="200"></v-img>
+      <v-btn class="mx-2" fab dark small color="primary" @click="openFileInput">
+        <v-icon dark>mdi-image</v-icon> </v-btn
+      ><v-btn outlined @click="onSubmit" type="submit">投稿</v-btn>
     </div>
   </div>
 </template>
@@ -20,10 +30,33 @@ class PostForm extends Vue {
   @Prop() readonly position?: Coords
 
   postBody = ''
+  imageUrl: string | ArrayBuffer = ''
 
   @Emit()
-  onSubmit(): string {
-    return this.postBody
+  onSubmit() {
+    return { postBody: this.postBody, imageUrl: this.imageUrl }
+  }
+
+  resetPostBody() {
+    this.postBody = ''
+    this.imageUrl = ''
+  }
+
+  openFileInput() {
+    document.getElementById('fileElem').click()
+  }
+
+  selectedFile(e) {
+    e.preventDefault()
+    const reader = new FileReader()
+    reader.readAsDataURL(e.target.files[0])
+    reader.addEventListener(
+      'load',
+      () => {
+        this.imageUrl = reader.result
+      },
+      false
+    )
   }
 }
 
