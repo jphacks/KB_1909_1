@@ -37,6 +37,7 @@ import Post from '../models/Post'
 import uploadImage, { ImgurResponse } from '../util/imgur/postImage'
 import CreateUserDialog from '../components/CreateUserDialog.vue'
 import createUser, { CreateUserResponse } from '../util/apiV2/users/createUser'
+import getUser, { GetUserResponse } from '../util/apiV2/users/getUser'
 import PostForm from '@/components/PostForm'
 import PostListContainer from '@/components/PostListContainer'
 
@@ -54,9 +55,11 @@ class Index extends Vue {
   position: Coords = { latitude: 0, longitude: 0 }
   status = '現在地を取得しています'
   posts: Post[] = []
+  me?: GetUserResponse
 
-  afterLogin() {
+  async afterLogin() {
     if (!this.userToken) return
+    this.me = (await getUser(this.userToken)) as GetUserResponse
 
     navigator.geolocation.watchPosition(
       this.getLocationSuccessfully,
