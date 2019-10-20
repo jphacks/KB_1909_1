@@ -13,7 +13,7 @@
         @change="selectedFile"
         hidden
       />
-      <v-img v-if="imageUrl" :src="imageUrl" max-height="200"></v-img>
+      <v-img v-if="imageUrl" :src="imageUrl" max-height="200" contain></v-img>
       <v-btn class="mx-2" fab dark small color="primary" @click="openFileInput">
         <v-icon dark>mdi-image</v-icon> </v-btn
       ><v-btn outlined @click="onSubmit" type="submit">投稿</v-btn>

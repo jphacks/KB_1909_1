@@ -7,7 +7,7 @@
         <h2 v-if="users[post.user_id]">
           {{ users[post.user_id] }}
         </h2>
-        <v-img :src="post.url" max-height="200"></v-img>
+        <v-img :src="post.url" max-height="200" contain></v-img>
         <p class="text--primary">{{ post.body }}</p>
         <p class="created-at">{{ formatDate(post.created_at) }}</p>
       </v-card-text>
