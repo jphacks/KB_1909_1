@@ -3,6 +3,12 @@
     <v-app-bar>
       <h1>monu</h1>
     </v-app-bar>
+
+    <create-user-dialog
+      v-model="isOpenCreateUserDialog"
+      @submit="submitNewUser"
+    ></create-user-dialog>
+
     <v-container>
       <div v-if="loadLocation">
         <post-form
@@ -29,22 +35,29 @@ import Coords from '../models/Coords'
 import ApiV1 from '../util/apiv1'
 import Post from '../models/Post'
 import uploadImage, { ImgurResponse } from '../util/imgur/postImage'
+import CreateUserDialog from '../components/CreateUserDialog.vue'
+import createUser, { CreateUserResponse } from '../util/apiV2/users/createUser'
 import PostForm from '@/components/PostForm'
 import PostListContainer from '@/components/PostListContainer'
 
 @Component({
   components: {
     PostForm,
-    PostListContainer
+    PostListContainer,
+    CreateUserDialog
   }
 })
 class Index extends Vue {
+  isOpenCreateUserDialog = true
+  userToken = ''
   loadLocation = false
   position: Coords = { latitude: 0, longitude: 0 }
   status = '現在地を取得しています'
   posts: Post[] = []
 
-  mounted() {
+  afterLogin() {
+    if (!this.userToken) return
+
     navigator.geolocation.watchPosition(
       this.getLocationSuccessfully,
       this.getLocationError
@@ -107,6 +120,13 @@ class Index extends Vue {
     } catch (err) {
       console.log(err)
     }
+  }
+
+  async submitNewUser(newUser) {
+    const createdUser = (await createUser(newUser)) as CreateUserResponse
+    this.userToken = createdUser.token
+    console.log(this.userToken)
+    this.afterLogin()
   }
 }
 

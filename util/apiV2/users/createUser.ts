@@ -12,7 +12,7 @@ const createUser = async (
   }
 }
 
-interface CreateUserRequest {
+export interface CreateUserRequest {
   name: string
   email: string
   password: string
