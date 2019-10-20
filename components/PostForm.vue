@@ -58,10 +58,6 @@ class PostForm extends Vue {
       false
     )
   }
-
-  resetPostBody() {
-    this.postBody = ''
-  }
 }
 
 export default PostForm
