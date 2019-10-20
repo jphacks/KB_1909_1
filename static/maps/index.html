@@ -46,7 +46,7 @@
                  console.log(data);
                  data.forEach(item => {
                    console.log(item);
-                   axios.get("http://monu-geometry.herokuapp.com/v2/users/"+item.user)
+                   axios.get("https://monu-geometry.herokuapp.com/v2/users/"+item.user)
                    .then(function(response){
                      em = response["data"]["email"];
                      im = response["data"]["image"];
