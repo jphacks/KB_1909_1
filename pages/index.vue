@@ -2,6 +2,7 @@
   <div>
     <v-app-bar>
       <h1>RE:Site</h1>
+      <v-btn class="ml-auto" outlined href="/maps">マップ</v-btn>
     </v-app-bar>
 
     <login-dialog
