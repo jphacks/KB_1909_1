@@ -4,6 +4,9 @@
     <v-card v-for="(post, i) in posts" :key="i" class="post-card">
       <v-card-text>
         <p>現在地から{{ Math.round(post.distance) }}m</p>
+        <p class="display-1 text--primary">
+          {{ post. }}
+        </p>
         <v-img :src="post.url" max-height="200"></v-img>
         <p class="text--primary">{{ post.body }}</p>
         <p class="created-at">{{ formatDate(post.created_at) }}</p>
