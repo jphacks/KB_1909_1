@@ -4,6 +4,12 @@
       <h1>RE:Site</h1>
     </v-app-bar>
 
+    <login-dialog
+      v-model="isOpenLoginDialog"
+      @submit="submitLogin"
+      @open-create-user-dialog="openCreateUserDialog"
+    ></login-dialog>
+
     <create-user-dialog
       v-model="isOpenCreateUserDialog"
       @submit="submitNewUser"
@@ -39,6 +45,7 @@ import CreateUserDialog from '../components/CreateUserDialog.vue'
 import createUser, { CreateUserResponse } from '../util/apiV2/users/createUser'
 import getUser, { GetUserResponse } from '../util/apiV2/users/getUser'
 import LoginDialog from '../components/LoginDialog.vue'
+import { LoginResponse } from '../util/apiV2/users/login'
 import PostForm from '@/components/PostForm'
 import PostListContainer from '@/components/PostListContainer'
 
@@ -51,7 +58,8 @@ import PostListContainer from '@/components/PostListContainer'
   }
 })
 class Index extends Vue {
-  isOpenCreateUserDialog = true
+  isOpenCreateUserDialog = false
+  isOpenLoginDialog = true
   userToken = ''
   loadLocation = false
   position: Coords = { latitude: 0, longitude: 0 }
@@ -132,6 +140,16 @@ class Index extends Vue {
     this.userToken = createdUser.token
     console.log(this.userToken)
     this.afterLogin()
+  }
+
+  async submitLogin(loginReq) {
+    const res = (await createUser(loginReq)) as LoginResponse
+    this.userToken = res.token
+    this.afterLogin()
+  }
+
+  openCreateUserDialog(shouldOpen) {
+    this.isOpenCreateUserDialog = shouldOpen
   }
 }
 

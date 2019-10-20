@@ -1,22 +1,23 @@
 <template>
-  <v-dialog :value="value" width="500" @input="input">
+  <v-dialog :value="value" width="500" persistent @input="input">
     <v-card>
       <v-card-title>ログイン</v-card-title>
       <v-card-text>
         <v-form>
           <v-text-field
-            v-model="newUser.email"
+            v-model="loginReq.email"
             label="E-mail"
             type="email"
             required
           ></v-text-field>
           <v-text-field
-            v-model="newUser.password"
+            v-model="loginReq.password"
             label="Password"
             type="password"
             required
           ></v-text-field>
-          <v-btn @click="submit">ログイン</v-btn>
+          <v-btn outlined @click="submit">ログイン</v-btn>
+          <v-btn outlined @click="openCreateUserDialog">アカウントを作る</v-btn>
         </v-form>
       </v-card-text>
     </v-card>
@@ -44,6 +45,12 @@ class LoginDialog extends Vue {
   submit() {
     this.input(false)
     return this.loginReq
+  }
+
+  @Emit()
+  openCreateUserDialog() {
+    this.input(false)
+    return true
   }
 }
 
