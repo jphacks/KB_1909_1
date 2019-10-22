@@ -8,7 +8,7 @@
           {{ users[post.user_id] }}
         </h2>
         <v-img :src="post.url" max-height="200" contain></v-img>
-        <p class="text--primary">{{ post.body }}</p>
+        <p class="post-body">{{ post.body }}</p>
         <p class="created-at">{{ formatDate(post.created_at) }}</p>
       </v-card-text>
     </v-card>
@@ -29,7 +29,8 @@ class PostListContainer extends Vue {
   users = {}
 
   formatDate(date: number): string {
-    return dayjs(date).format('YYYY-MM-DD HH:mm')
+    console.log(date)
+    return dayjs.unix(date).format('YYYY-MM-DD HH:mm')
   }
 
   @Watch('posts')
@@ -62,5 +63,14 @@ h2 {
   color: black;
   margin-bottom: 10px;
   font-weight: normal;
+}
+
+p {
+  color: #000;
+}
+
+.post-body {
+  font-size: 1.2rem;
+  color: black;
 }
 </style>
