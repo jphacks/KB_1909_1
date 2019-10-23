@@ -1,7 +1,7 @@
-import User from '../models/User'
+import Me from '../models/Me'
 
 interface State {
-  me?: User
+  me?: Me
 }
 
 export const state = (): State => ({
@@ -15,7 +15,7 @@ export const getters = {
 }
 
 export const mutations = {
-  setMyUserInfo: (state: State, userInfo: User) => {
+  setMyUserInfo: (state: State, userInfo: Me) => {
     state.me = userInfo
   }
 }
@@ -24,7 +24,7 @@ export const actions = {
   fetchMyUserInfo({ commit }) {
     try {
       // TODO: APIからとってくる
-      const res: User = {
+      const res: Me = {
         id: 0,
         name: 'face',
         email: 'hoge@hoge',
